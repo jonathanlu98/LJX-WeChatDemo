@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface CIrcleHeaderView : UIView
-
+@property (strong, nonatomic) __block NSObject *object;
 @end

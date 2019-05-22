@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SignUpViewController">
             <connections>
+                <outlet property="signUpButton" destination="Frc-Vb-oEh" id="Gtm-h0-LzA"/>
                 <outlet property="view" destination="iN0-l3-epB" id="k5Y-jm-m41"/>
             </connections>
         </placeholder>
@@ -19,10 +21,21 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Frc-Vb-oEh">
-                    <rect key="frame" x="16" y="523" width="343" height="42"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="欢迎" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HHg-Sa-JMQ">
+                    <rect key="frame" x="87" y="53" width="201" height="84"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="84" id="hTz-FV-4je"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Baskerville" family="Baskerville" pointSize="39"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Frc-Vb-oEh">
+                    <rect key="frame" x="16" y="524" width="343" height="42"/>
                     <color key="backgroundColor" red="0.094184465101720641" green="0.81488715664384326" blue="0.43772593129040172" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="42" id="V21-Zw-ioK"/>
+                    </constraints>
                     <color key="tintColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                     <state key="normal" title="注册">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -31,15 +44,16 @@
                         <action selector="didSelectSignUp:" destination="-1" eventType="touchUpInside" id="04g-x5-lFD"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="欢迎" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HHg-Sa-JMQ">
-                    <rect key="frame" x="87" y="53" width="201" height="84"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="Baskerville" family="Baskerville" pointSize="39"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="HHg-Sa-JMQ" firstAttribute="centerX" secondItem="Frc-Vb-oEh" secondAttribute="centerX" id="7hB-id-667"/>
+                <constraint firstItem="HHg-Sa-JMQ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="87" id="PEw-id-ypC"/>
+                <constraint firstItem="Frc-Vb-oEh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="S94-EH-etN"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Frc-Vb-oEh" secondAttribute="bottom" constant="101" id="aBG-hz-yYl"/>
+                <constraint firstItem="HHg-Sa-JMQ" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="33" id="phj-gf-8IL"/>
+                <constraint firstItem="Frc-Vb-oEh" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" id="qpC-Qv-mQ4"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="101.5" y="35.5"/>
         </view>

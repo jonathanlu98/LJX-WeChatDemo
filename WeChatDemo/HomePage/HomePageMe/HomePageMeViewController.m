@@ -25,6 +25,7 @@
 //    //设置导航栏背景颜色
 //    [self.navigationController.navigationBar setBackgroundImage:imageBar forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
+
 //    
 
     

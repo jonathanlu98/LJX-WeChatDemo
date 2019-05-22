@@ -24,10 +24,12 @@
 @implementation HomeBarViewController
 
 - (void)viewDidLoad {
+
+
         
 
     [super viewDidLoad];
-    
+
 
 
     [self loadViewControllers];
@@ -85,6 +87,7 @@
     //设置选择后的字体颜色
     [vc.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName : Global_tintColor} forState:UIControlStateSelected];
 }
+
 /*
 #pragma mark - Navigation
 

@@ -77,7 +77,7 @@
 		22E056FF207E632300B94874 /* SDRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22E056F8207E632300B94874 /* SDRefreshFooterView.m */; };
 		22E05700207E632300B94874 /* SDRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22E056FB207E632300B94874 /* SDRefreshView.m */; };
 		22F67A65205D18BF005CA5A3 /* CircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F67A63205D18BF005CA5A3 /* CircleViewController.m */; };
-		94A3050793A35B6520F87EBF /* libPods-WeChatDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 289A23E33F0A79A100552C06 /* libPods-WeChatDemo.a */; };
+		78192E55E3398DB385693205 /* Pods_WeChatDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AC823078ECB9D346DD5F22 /* Pods_WeChatDemo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -297,8 +297,8 @@
 		22E056FB207E632300B94874 /* SDRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDRefreshView.m; sourceTree = "<group>"; };
 		22F67A62205D18BF005CA5A3 /* CircleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CircleViewController.h; sourceTree = "<group>"; };
 		22F67A63205D18BF005CA5A3 /* CircleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CircleViewController.m; sourceTree = "<group>"; };
-		289A23E33F0A79A100552C06 /* libPods-WeChatDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeChatDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DEB3198B1E9F64E208AFA01 /* Pods-WeChatDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChatDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeChatDemo/Pods-WeChatDemo.release.xcconfig"; sourceTree = "<group>"; };
+		A0AC823078ECB9D346DD5F22 /* Pods_WeChatDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeChatDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA0015FC7D964F63FCE7F0D0 /* Pods-WeChatDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChatDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeChatDemo/Pods-WeChatDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -307,7 +307,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94A3050793A35B6520F87EBF /* libPods-WeChatDemo.a in Frameworks */,
+				78192E55E3398DB385693205 /* Pods_WeChatDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -551,7 +551,7 @@
 				2296218A20728796008B1EE0 /* Security.framework */,
 				22C6E002206E1A3000087423 /* Podfile */,
 				22C6DFAD206E19F200087423 /* Objective_C_Demo */,
-				289A23E33F0A79A100552C06 /* libPods-WeChatDemo.a */,
+				A0AC823078ECB9D346DD5F22 /* Pods_WeChatDemo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -805,7 +805,7 @@
 				2234FB6B205AC956000AACFE /* Sources */,
 				2234FB6C205AC956000AACFE /* Frameworks */,
 				2234FB6D205AC956000AACFE /* Resources */,
-				4554E996F96D18F75339628E /* [CP] Copy Pods Resources */,
+				30B69B49753472EB7C32D6C2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -947,24 +947,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4554E996F96D18F75339628E /* [CP] Copy Pods Resources */ = {
+		30B69B49753472EB7C32D6C2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-WeChatDemo/Pods-WeChatDemo-resources.sh",
-				"${PODS_ROOT}/AVOSCloud/AVOS/AVOSCloud/AVOSCloud_Art.inc",
-				"${PODS_ROOT}/IQKeyboardManager/IQKeyBoardManager/Resources/IQKeyboardManager.bundle",
+				"${SRCROOT}/Pods/Target Support Files/Pods-WeChatDemo/Pods-WeChatDemo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AVOSCloud/AVOSCloud.framework",
+				"${BUILT_PRODUCTS_DIR}/AVOSCloudIM/AVOSCloudIM.framework",
+				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AVOSCloud_Art.inc",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AVOSCloud.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AVOSCloudIM.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManager.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WeChatDemo/Pods-WeChatDemo-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WeChatDemo/Pods-WeChatDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C0126D757F26F29F117BD347 /* [CP] Check Pods Manifest.lock */ = {
@@ -1207,7 +1211,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3826XM56GE;
+				DEVELOPMENT_TEAM = D373F6Z3NB;
 				INFOPLIST_FILE = WeChatDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1223,7 +1227,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3826XM56GE;
+				DEVELOPMENT_TEAM = D373F6Z3NB;
 				INFOPLIST_FILE = WeChatDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

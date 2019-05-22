@@ -21,12 +21,13 @@
 
 @interface CircleViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
-@property (strong, nonatomic) NSArray *iconImageNamesArray;
-@property (strong, nonatomic) NSArray *namesArray;
-@property (strong, nonatomic) NSArray *textArray;
-@property (strong, nonatomic) NSArray *picImageNamesArray;
-@property (nonatomic, strong) NSMutableArray *modelsArray;
-@property (strong, nonatomic) NSArray *products;
+@property (strong, nonatomic) __block NSArray *iconImageNamesArray;
+@property (strong, nonatomic) __block NSArray *namesArray;
+@property (strong, nonatomic) __block NSArray *textArray;
+@property (strong, nonatomic) __block NSArray *picImageNamesArray;
+
+@property (nonatomic, strong) __block NSMutableArray *modelsArray;
+@property (strong, nonatomic) __block NSArray *products;
 @end
 
 @implementation CircleViewController
@@ -36,6 +37,9 @@
 - (void)viewDidLoad {
 
     [super viewDidLoad];
+    
+    self.tableView=[[UITableView alloc]initWithFrame:self.view.frame style:UITableViewStyleGrouped];
+    [self.tableView  setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.navigationItem.title=@"朋友圈";
     
     
@@ -56,22 +60,15 @@
 //
     
 //设置朋友圈顶部的视图view
-    CIrcleHeaderView *headerView = [CIrcleHeaderView new];
-    headerView.frame = CGRectMake(0, 0, 0, 300);
+    CIrcleHeaderView *headerView = [[CIrcleHeaderView alloc]initWithFrame:CGRectMake(0, 0, 0, 300)];
+
     self.tableView.tableHeaderView = headerView;
      [self.tableView registerClass:[CircleTableViewCell class] forCellReuseIdentifier:CirCleTableViewCellId];
-    
-    
     self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     self.tableView.estimatedRowHeight = 100;
-    [self creatModelsWithCount:[_iconImageNamesArray count]];
-    
 
     
-
-
-
-    
+//    [self creatModelsWithCount:[_iconImageNamesArray count]];
 //
     // Do any additional setup after loading the view from its nib.
 }
@@ -93,6 +90,12 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self setupData];
+}
+
 - (instancetype)init {
     //隐藏底部的书签栏
     self.hidesBottomBarWhenPushed = YES;
@@ -101,90 +104,172 @@
 
     return [super init];
 }
+- (void) setupData {
+    // LeanCloud - 查询 - 获取商品列表
+    // https://leancloud.cn/docs/leanstorage_guide-ios.html#查询
+    AVQuery *query = [AVQuery queryWithClassName:@"Product"];
+    [query orderByDescending:@"createdAt"];
+    // owner 为 Pointer，指向 _User 表
+    [query includeKey:@"owner"];
+    // image 为 File
+    [query includeKey:@"image"];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            self.products = objects;
+            [self.tableView reloadData];
+           __block NSMutableArray *namesArray;
+           __block NSMutableArray *iconImageNamesArray;
+           __block NSMutableArray *textArray;
+           __block NSMutableArray *picImageNamesArray;
+            
+            
+            for(int i=0;i<[objects count];i++){
+                AVObject *product = objects[i];
+                AVUser *owner=[product objectForKey:@"owner"];
+                namesArray[i]=[owner valueForKey:@"nickname"];
+
+                
+                textArray[i]=[NSString stringWithFormat:@"%@",[product objectForKey:@"description"]];
+                
+                AVFile *icon=[owner objectForKey:@"user_icon"];
+                [icon downloadWithCompletionHandler:^(NSURL * _Nullable filePath, NSError * _Nullable error) {
+                    iconImageNamesArray[i]=filePath;
+                }];
+                
+                AVFile *image=[product objectForKey:@"image"];
+                [image downloadWithCompletionHandler:^(NSURL * _Nullable filePath, NSError * _Nullable error) {
+                    picImageNamesArray[i]=filePath;
+                }];
+                [self.tableView reloadData];
+                
+            }
+            self.textArray=textArray;
+            self.namesArray=namesArray;
+            self.picImageNamesArray=picImageNamesArray;
+            self.iconImageNamesArray=iconImageNamesArray;
+            
+            
+        }
+        
+    }];
+   
+   
+    
+}
+
 
 - (void)creatModelsWithCount:(NSInteger)count
 {
     if (!_modelsArray) {
         _modelsArray = [NSMutableArray new];
     }
-//    AVUser *currentUser = [AVUser currentUser];
-//    AVQuery *query = [AVQuery queryWithClassName:@"Product"];
-//    [query orderByDescending:@"createdAt"];
-//    // owner 为 Pointer，指向 _User 表
-//    [query includeKey:@"owner"];
-//    // image 为 File
-//    [query includeKey:@"image"];
-//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-//        if (!error) {
-//            self.products = objects;
-//            [self.tableView reloadData];
-//        }
-//    }];
+
     
-//    AVQuery *query = [AVQuery queryWithClassName:@"Project"];
-    
-    self.iconImageNamesArray = @[@"icon0.jpg",
-                                     @"icon1.jpg",
-                                     @"icon2.jpg",
-                                     @"icon3.jpg",
-                                     @"icon4.jpg",
-                                     ];
-    
-    self.namesArray = @[@"GSD_iOS",
-                            @"风口上的猪",
-                            @"当今世界网名都不好起了",
-                            @"我叫郭德纲",
-                            @"Hello Kitty"];
-    
-    self.textArray = @[@"当你的 app 没有提供 3x 的 LaunchImage 时，系统默认进入兼容模式，大屏幕一切按照 320 宽度渲染，屏幕宽度返回 320；然后等比例拉伸到大屏。这种情况下对界面不会产生任何影响，等于把小屏完全拉伸。",
-                           @"然后等比例拉伸到大屏。这种情况下对界面不会产生任何影响，等于把小屏完全拉伸。",
-                           @"当你的 app 没有提供 3x 的 LaunchImage 时",
-                           @"但是建议不要长期处于这种模式下，否则在大屏上会显得字大，内容少，容易遭到用户投诉。",
-                           @"屏幕宽度返回 320；然后等比例拉伸到大屏。这种情况下对界面不会产生任何影响，等于把小屏完全拉伸。但是建议不要长期处于这种模式下。"
-                           ];
-    
-    NSArray *picImageNamesArray = @[ @"pic0.jpg",
-                                     @"pic1.jpg",
-                                     @"pic2.jpg",
-                                     @"pic3.jpg",
-                                     @"pic4.jpg",
-                                     @"pic5.jpg",
-                                     @"pic6.jpg",
-                                     @"pic7.jpg",
-                                     @"pic8.jpg"
-                                     ];
+//    self.iconImageNamesArray = @[@"icon0.jpg",
+//                                     @"icon1.jpg",
+//                                     @"icon2.jpg",
+//                                     @"icon3.jpg",
+//                                     @"icon4.jpg",
+//                                     ];
+//
+//    self.namesArray = @[@"GSD_iOS",
+//                            @"风口上的猪",
+//                            @"当今世界网名都不好起了",
+//                            @"我叫郭德纲",
+//                            @"Hello Kitty"];
+//
+//    self.textArray = @[@"当你的 app 没有提供 3x 的 LaunchImage 时，系统默认进入兼容模式，大屏幕一切按照 320 宽度渲染，屏幕宽度返回 320；然后等比例拉伸到大屏。这种情况下对界面不会产生任何影响，等于把小屏完全拉伸。",
+//                           @"然后等比例拉伸到大屏。这种情况下对界面不会产生任何影响，等于把小屏完全拉伸。",
+//                           @"当你的 app 没有提供 3x 的 LaunchImage 时",
+//                           @"但是建议不要长期处于这种模式下，否则在大屏上会显得字大，内容少，容易遭到用户投诉。",
+//                           @"屏幕宽度返回 320；然后等比例拉伸到大屏。这种情况下对界面不会产生任何影响，等于把小屏完全拉伸。但是建议不要长期处于这种模式下。"
+//                           ];
+//
+//    NSArray *picImageNamesArray = @[ @"pic0.jpg",
+//                                     @"pic1.jpg",
+//                                     @"pic2.jpg",
+//                                     @"pic3.jpg",
+//                                     @"pic4.jpg",
+//                                     @"pic5.jpg",
+//                                     @"pic6.jpg",
+//                                     @"pic7.jpg",
+//                                     @"pic8.jpg"
+//                                     ];
     
     for (int i = 0; i < [_textArray count]; i++) {
         CircleModel *model = [CircleModel new];
         model.iconName = _iconImageNamesArray[i];
         model.name = _namesArray[i];
         model.content = _textArray[i];
-        
-        NSMutableArray *temp = [NSMutableArray new];
-        for (int i = 0; i < [picImageNamesArray count]; i++) {
 
-            [temp addObject:picImageNamesArray[i]];
+        NSMutableArray *temp = [NSMutableArray new];
+        for (int i = 0; i < [_picImageNamesArray count]; i++) {
+            [temp addObject:_picImageNamesArray[i]];
         }
         if (temp.count) {
             model.picNamesArray = [temp copy];
         }
-        
+
         [self.modelsArray addObject:model];
     }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.modelsArray.count;
+    return self.products.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CircleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CirCleTableViewCellId];
+
+    CircleTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if(!cell){
+            cell = [tableView dequeueReusableCellWithIdentifier:CirCleTableViewCellId];
+    }
+    
+    cell.separatorInset=UIEdgeInsetsMake(0.1, 100, 0.1, 0.1);
     
 
+
+    AVObject *product = self.products[indexPath.row];
+    AVUser *owner=[self.products[indexPath.row] objectForKey:@"owner"];
+    AVFile *icon=[[self.products[indexPath.row] objectForKey:@"owner"] objectForKey:@"user_icon"];
+    [icon downloadWithCompletionHandler:^(NSURL * _Nullable filePath, NSError * _Nullable error) {
+        cell.iconView.image=[UIImage imageWithData:[NSData dataWithContentsOfURL:filePath]];
+    }];
+
     
-    cell.model = self.modelsArray[indexPath.row];
+    AVFile *image=[product objectForKey:@"image"];
+    if(image.url==nil){
+        [cell.circleImageView removeFromSuperview];
+
+    }
+    
+
+    [image downloadWithCompletionHandler:^(NSURL * _Nullable filePath, NSError * _Nullable error) {
+
+        UIImage *image=[UIImage imageWithData:[NSData dataWithContentsOfURL:filePath]];
+        cell->imageWidth=image.size.width;
+        cell->imageHeight=image.size.height;
+        
+//        [cell setNeedsUpdateConstraints];
+//        [cell updateConstraintsIfNeeded];
+        
+        cell.circleImageView.image=image;
+    }];
+
+    cell.nameLabel.text=[owner valueForKey:@"nickname"];
+    
+    cell.contentLabel.text=[NSString stringWithFormat:@"%@", [product objectForKey:@"description"]];
+    
+    
+    
+    
+    
+    
+    
+
     return cell;
 }
 

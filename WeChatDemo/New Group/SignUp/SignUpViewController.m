@@ -13,6 +13,7 @@
 #import <AVOSCloud/AVOSCloud.h>
 
 @interface SignUpViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
+@property (strong, nonatomic) IBOutlet UIButton *signUpButton;
 
 
 @end
@@ -30,6 +31,7 @@
     signUpTV.tableFooterView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0.01)];
     signUpTV.sectionHeaderHeight=80;
     signUpTV.sectionFooterHeight=0;
+    signUpTV.backgroundColor=[UIColor clearColor];
     
 //    signUpTV.userInteractionEnabled=YES;
     

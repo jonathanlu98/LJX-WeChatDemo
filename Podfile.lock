@@ -9,24 +9,30 @@ PODS:
     - AVOSCloudIM/_NOARC (= 10.1.0)
   - AVOSCloudIM/_NOARC (10.1.0):
     - AVOSCloud (= 10.1.0)
+  - ChameleonFramework (2.0.4):
+    - ChameleonFramework/Default (= 2.0.4)
+  - ChameleonFramework/Default (2.0.4)
   - IQKeyboardManager (3.3.7)
 
 DEPENDENCIES:
   - AVOSCloud
   - AVOSCloudIM
+  - ChameleonFramework
   - IQKeyboardManager
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - AVOSCloud
     - AVOSCloudIM
+    - ChameleonFramework
     - IQKeyboardManager
 
 SPEC CHECKSUMS:
   AVOSCloud: e6639cc02af886d88aafce0217b31f181d5e3fc7
   AVOSCloudIM: 287c87fe985e2be2b7d4b2a9dc74e56797a7b276
+  ChameleonFramework: 5abe69b1f2a6cc79c3c435fcd9d3d855748225ee
   IQKeyboardManager: 249c3946acf61345c18b038eb50863fe2793e3a8
 
-PODFILE CHECKSUM: 7b748c92168123e1aad6313d379fa27afa966fe3
+PODFILE CHECKSUM: a7e032cf1d8da0b4f6be375a7b1df851beb662d9
 
 COCOAPODS: 1.5.0
